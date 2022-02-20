@@ -111,7 +111,7 @@ final class ViewController: UIViewController {
             map.showsUserLocation = true
             let myLatitude = locationManager.location?.coordinate.latitude
             let myLongitude = locationManager.location?.coordinate.longitude
-
+//
             let myLocation = CLLocationCoordinate2D(
                 latitude: myLatitude ?? 53.904541,
                 longitude: myLongitude ?? 27.561523

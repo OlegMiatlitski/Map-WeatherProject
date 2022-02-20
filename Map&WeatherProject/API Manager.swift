@@ -10,6 +10,26 @@ struct APIManager {
         static let weather = "/weather"
     }
     
+    func getTheWeather(
+        myLatitude: Double,
+        myLongitude: Double,
+        completion: @escaping ((DataOfTheWeather) -> Void)) {
+            let key: String = "e04eb929d3b6dcb68b39af7948be9fb0"
+            AF.request(BaseConstant.baseURL +
+                       EndPoints.weather +
+                       "?lat=\(myLatitude)&lon=\(myLongitude)&appid=\(key)")
+                .responseDecodable(of: DataOfTheWeather.self) {
+                    response in
+                    switch response.result {
+                    case .success(let model):
+                        completion(model)
+                    case.failure(let error):
+                        print(error)
+                    }
+                }
+        }
+    
+    
     func getDataAboutTheWeather(
         myLatitude: Double,
         myLongitude: Double,
@@ -18,7 +38,7 @@ struct APIManager {
         let header: HTTPHeaders = [
             "lat" : "\(myLatitude)",
             "lon" : "\(myLongitude)",
-            "appid": "7e3a861f881c64170c31b5490ed80a34"
+            "appid": "e04eb929d3b6dcb68b39af7948be9fb0"
         ]
         AF.request(
             BaseConstant.baseURL + EndPoints.weather,
@@ -35,7 +55,7 @@ struct APIManager {
                 }
             }
     }
-
+    
     private init() { }
 }
 

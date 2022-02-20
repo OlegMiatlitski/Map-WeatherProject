@@ -138,11 +138,11 @@ final class ViewController: UIViewController {
     }
     
     @objc private func weatherInMyLocation() {
-        print("Weather")
-        APIManager.instance.getDataAboutTheWeather(
+        APIManager.instance.getTheWeather(
             myLatitude: selectedLatitude,
             myLongitude: selectedLongitude) { data in
-                print(data)
+                let celcium: Int = Int(data.main.temp) - 273
+                print("The temperature in your location is \(celcium) C.")
             }
     }
 }

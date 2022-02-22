@@ -21,8 +21,6 @@ final class ViewController: UIViewController {
         addConstraints()
         setupUI()
     }
-    // MARK: - API
-    
     
     // MARK: - Setups
     
@@ -54,10 +52,11 @@ final class ViewController: UIViewController {
     }
     
     private func setupUI() {
-        let coordinatesRegion = MKCoordinateRegion(center: location,
-                                                   latitudinalMeters: 5000,
-                                                   longitudinalMeters: 5000)
-        
+        let coordinatesRegion = MKCoordinateRegion(
+            center: location,
+            latitudinalMeters: 5000,
+            longitudinalMeters: 5000
+        )
         map.setRegion(coordinatesRegion, animated: true)
         
         
@@ -113,7 +112,6 @@ final class ViewController: UIViewController {
         map.showsUserLocation = true
         let myLatitude = locationManager.location?.coordinate.latitude
         let myLongitude = locationManager.location?.coordinate.longitude
-        
         let myLocation = CLLocationCoordinate2D(
             latitude: myLatitude ?? 53.904541,
             longitude: myLongitude ?? 27.561523
@@ -141,8 +139,7 @@ final class ViewController: UIViewController {
         APIManager.instance.getTheWeather(
             myLatitude: selectedLatitude,
             myLongitude: selectedLongitude) { data in
-                let celcium: Int = Int(data.main.temp) - 273
-                print("The temperature in your location is \(celcium) C.")
+                print("The temperature in your location is \(data.main.temp) C.")
             }
     }
 }

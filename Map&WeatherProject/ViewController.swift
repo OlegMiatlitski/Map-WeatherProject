@@ -139,7 +139,7 @@ final class ViewController: UIViewController {
         APIManager.instance.getTheWeather(
             myLatitude: selectedLatitude,
             myLongitude: selectedLongitude) { data in
-                print("The temperature in your location is \(data.main.temp) C.")
+                print("The temperature in your location is \(data.main.temp) °C.")
             }
     }
 }

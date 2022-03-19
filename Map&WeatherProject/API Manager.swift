@@ -33,16 +33,15 @@ struct APIManager {
                        APIManager.key +
                        Metrics.metric
             ).responseDecodable(of: DataOfTheWeather.self) {
-                    response in
-                    switch response.result {
-                    case .success(let model):
-                        completion(model)
-                    case.failure(let error):
-                        print(error)
-                    }
+                response in
+                switch response.result {
+                case .success(let model):
+                    completion(model)
+                case.failure(let error):
+                    print(error)
                 }
+            }
         }
     
     private init() { }
 }
-

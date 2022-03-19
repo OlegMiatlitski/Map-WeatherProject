@@ -5,4 +5,3 @@ struct DataOfTheWeather: Codable {
 struct Main: Codable {
     let temp: Double
 }
-

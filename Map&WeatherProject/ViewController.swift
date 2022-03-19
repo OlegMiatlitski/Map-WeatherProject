@@ -9,9 +9,12 @@ final class ViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private let myLocationButton = UIButton()
     private let weatherInMyLocationButton = UIButton()
+    private let weatherButton = UIButton()
     private let location = CLLocationCoordinate2D(latitude: 53.904541, longitude: 27.561523)
     private var selectedLatitude: Double = 0.0
     private var selectedLongitude: Double = 0.0
+    private var topAnchor: Int = -100
+    private var topConstraints = NSLayoutConstraint()
     
     // MARK: - Lifecycle
     
@@ -28,6 +31,7 @@ final class ViewController: UIViewController {
         view.addSubview(map)
         view.addSubview(myLocationButton)
         view.addSubview(weatherInMyLocationButton)
+        view.addSubview(weatherButton)
     }
     
     private func addConstraints() {
@@ -49,16 +53,32 @@ final class ViewController: UIViewController {
         weatherInMyLocationButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
         weatherInMyLocationButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
+        weatherButton.translatesAutoresizingMaskIntoConstraints = false
+        weatherButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
+        weatherButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        weatherButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        topConstraints = weatherButton.topAnchor.constraint(equalTo: view.topAnchor, constant: -30)
+        topConstraints.isActive = true
+        
     }
     
     private func setupUI() {
+        
+        weatherButton.backgroundColor = .systemBlue
+        weatherButton.setTitleColor(.white, for: .normal)
+        weatherButton.layer.masksToBounds = false
+        weatherButton.layer.cornerRadius = 15
+        weatherButton.layer.shadowColor = UIColor.black.cgColor
+        weatherButton.layer.shadowOpacity = 0.6
+        weatherButton.layer.shadowRadius = 4.0
+        weatherButton.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
+        
         let coordinatesRegion = MKCoordinateRegion(
             center: location,
             latitudinalMeters: 5000,
             longitudinalMeters: 5000
         )
         map.setRegion(coordinatesRegion, animated: true)
-        
         
         let configuratorForMyLocationButton = UIImage.SymbolConfiguration(
             pointSize: 40,
@@ -136,9 +156,12 @@ final class ViewController: UIViewController {
     }
     
     @objc private func weatherInMyLocation() {
+        topConstraints.constant = 50
+        self.view.layoutIfNeeded()
         APIManager.instance.getTheWeather(
             myLatitude: selectedLatitude,
             myLongitude: selectedLongitude) { data in
+                self.weatherButton.setTitle("\(data.main.temp) °C", for: .normal)
                 print("The temperature in your location is \(data.main.temp) °C.")
             }
     }

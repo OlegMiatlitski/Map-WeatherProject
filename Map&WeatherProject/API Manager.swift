@@ -1,7 +1,7 @@
 import Alamofire
 struct APIManager {
     static let instance = APIManager()
-    static let key: String = "e04eb929d3b6dcb68b39af7948be9fb0"
+    private let key: String = "e04eb929d3b6dcb68b39af7948be9fb0"
     
     enum BaseConstant {
         static let baseURL = "https://api.openweathermap.org/data/2.5"
@@ -19,6 +19,11 @@ struct APIManager {
         static let imperial = "&units=imperial"
     }
     
+    private let header: HTTPHeaders = [
+        "key":"e04eb929d3b6dcb68b39af7948be9fb0",
+        "Accept":"application/json"
+    ]
+    
     func getTheWeather(
         myLatitude: Double,
         myLongitude: Double,
@@ -30,7 +35,7 @@ struct APIManager {
                        EndPoints.longitude +
                        "\(myLongitude)" +
                        EndPoints.appID +
-                       APIManager.key +
+                       key +
                        Metrics.metric
             ).responseDecodable(of: DataOfTheWeather.self) {
                 response in
